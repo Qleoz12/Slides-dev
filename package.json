@@ -1,0 +1,30 @@
+{
+  "homepage": "https://qleoz12.github.io/slides",
+  "packageManager": "pnpm@10.9.0",
+  "name": "slidev-new",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "dev:intro": "slidev slides/intro.md --open",
+    "dev:workshop": "slidev slides/workshop.md --open",
+    "dev:review": "slidev slides/review.md --open",
+    "build:intro": "slidev build slides/intro.md --out ../dist/intro --base /intro",
+    "build:workshop": "slidev build slides/workshop.md --out ../dist/workshop --base /workshop",
+    "build:review": "slidev build slides/review.md --out ../dist/review --base /review",
+    "build:sql-hackerrank": "slidev build slides/sql-hackerrank.md --out ../dist/sql-hackerrank --base /sql-hackerrank",
+    "build:all": "pnpm build:intro && pnpm build:workshop && pnpm build:review && pnpm build:sql-hackerrank",
+    "serve:all": "npx serve dist"
+  },
+"dependencies": {
+  "@slidev/cli": "^51.6.0",
+  "@slidev/theme-default": "latest",
+  "@slidev/theme-seriph": "latest",
+  "slidev-new": "file:",
+  "vue": "^3.5.13"
+},
+"devDependencies": {
+  "unplugin-vue-components": "^28.5.0"
+}
+}
