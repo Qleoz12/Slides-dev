@@ -15,16 +15,23 @@
     "build:review": "slidev build slides/review.md --out ../dist/review --base /review",
     "build:sql-hackerrank": "slidev build slides/sql-hackerrank.md --out ../dist/sql-hackerrank --base /sql-hackerrank",
     "build:all": "pnpm build:intro && pnpm build:workshop && pnpm build:review && pnpm build:sql-hackerrank",
-    "serve:all": "npx serve dist"
+    "serve:all": "npx serve dist",
+    "auto:build": "chokidar 'slides/*.md' -c 'pnpm build:all'",
+    "live": "concurrently -k -n 'BUILD,SERVE' -c green,cyan \"pnpm auto:build\" \"live-server dist --watch=dist --port=3000\"",
+    "start": "pnpm build:all && pnpm live"
+
   },
-"dependencies": {
-  "@slidev/cli": "^51.6.0",
-  "@slidev/theme-default": "latest",
-  "@slidev/theme-seriph": "latest",
-  "slidev-new": "file:",
-  "vue": "^3.5.13"
-},
-"devDependencies": {
-  "unplugin-vue-components": "^28.5.0"
-}
+  "dependencies": {
+    "@slidev/cli": "^51.6.0",
+    "@slidev/theme-default": "latest",
+    "@slidev/theme-seriph": "latest",
+    "slidev-new": "file:",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.1.2",
+    "live-server": "^1.2.2",
+    "unplugin-vue-components": "^28.5.0"
+  }
 }

@@ -41,8 +41,7 @@ GROUP BY co.continent;
 
 ## 🏆 Contest Leaderboard
 
-**Problem**:  
-https://www.hackerrank.com/challenges/contest-leaderboard/problem
+**Problem**:  https://www.hackerrank.com/challenges/contest-leaderboard/problem
 
 **Description**:  
 Calculate each hacker’s total score by summing their maximum scores for each challenge. Exclude hackers with 0 score.
@@ -115,48 +114,51 @@ FROM (
 
 ---
 
+### 🛠️ Breakdown
+
+- `@row := @row + 1`: Simulates a **counter** to generate numbers 1 to 1000.
+- `CROSS JOIN information_schema.tables t2`: Creates a **huge virtual table** to simulate looping behavior.
+- **Subquery 1 (candidate_numbers)**:
+  - Generates candidate numbers from 1 to 1000 using the simulated loop.
+- **Subquery 2 (numbers)**:
+  - For each candidate, checks for all numbers less than it that could divide it.
+- `NOT EXISTS (...)`: If any number divides the candidate → it's **not prime**, so exclude it.
+- `GROUP_CONCAT`: Combines all valid primes into a single string, separated by `&`.
+
+---
+
+
 ## 🔢 Print Prime Numbers (MySQL 8+)
 
-**Problem**:  
-https://www.hackerrank.com/challenges/print-prime-numbers/problem
+**Problem**: https://www.hackerrank.com/challenges/print-prime-numbers/problem
 
-**Description**:  
-Use recursive CTEs to generate prime numbers up to 1000 in one SQL statement.
-
+**Description**:  <AutoFitText :max="15" :min="10" modelValue="Use recursive CTEs to generate prime numbers up to 1000 in one SQL statement."/>
 ```sql
 WITH RECURSIVE numbers AS (
-    SELECT 2 AS n
-    UNION ALL
+    SELECT 2 AS n UNION ALL
     SELECT n + 1 FROM numbers WHERE n < 1000
-),
-divisors AS (
-    SELECT 2 AS d
-    UNION ALL
+),divisors AS (
+    SELECT 2 AS d UNION ALL
     SELECT d + 1 FROM divisors WHERE d < 500
 )
 SELECT GROUP_CONCAT(n ORDER BY n SEPARATOR '&') AS result
 FROM (
-    SELECT n
-    FROM numbers
+    SELECT n FROM numbers
     WHERE NOT EXISTS (
         SELECT 1 FROM divisors WHERE d < n AND n % d = 0
     )
 ) AS primes;
 ```
-
 💡 *Elegant and fast solution using recursive CTE.*
 
 ---
 
 ## 🔺 Triangle Pattern
 
-**Problem**:  
-https://www.hackerrank.com/challenges/draw-the-triangle-1/problem
+**Problem**: https://www.hackerrank.com/challenges/draw-the-triangle-1/problem
 
 **Description**:  
 Print a triangle of asterisks decreasing from 20 to 1 using user-defined variables and cross-joins.
-
----
 
 ```sql
 SELECT REPEAT('* ', n) AS pattern
@@ -171,14 +173,19 @@ FROM (
 ORDER BY 1;
 ```
 
-✅ *Builds a pyramid pattern using REPEAT and row counter.*
+---
+
+## 🛠️ Breakdown
+
+- Uses a REPEAT function to repeat '*' symbols.
+- Generates numbers from 20 to 1 using a variable and Cartesian joins.
+- Limits output to 20 rows for triangle shape.
 
 ---
 
 ## 🧮 Interviews Challenge
 
-**Problem**:  
-https://www.hackerrank.com/challenges/interviews/problem
+**Problem**: https://www.hackerrank.com/challenges/interviews/problem
 
 **Description**:  
 Aggregate total submissions, acceptances, and views per contest. Only show rows with non-zero data.
@@ -187,47 +194,44 @@ Aggregate total submissions, acceptances, and views per contest. Only show rows 
 
 ```sql
 SELECT 
-    c.contest_id, 
-    c.hacker_id, 
-    c.name,
-    SUM(COALESCE(ss.total_submissions, 0)) AS total_submissions,
-    SUM(COALESCE(ss.total_accepted_submissions, 0)) AS total_accepted_submissions,
-    SUM(COALESCE(vs.total_views, 0)) AS total_views,
-    SUM(COALESCE(vs.total_unique_views, 0)) AS total_unique_views
+  c.contest_id, c.hacker_id, c.name,SUM(COALESCE(ss.total_submissions,0)) AS total_submissions,
+  SUM(COALESCE(ss.total_accepted_submissions,0)) AS total_accepted_submissions,
+  SUM(COALESCE(vs.total_views,0)) AS total_views,SUM(COALESCE(vs.total_unique_views,0)) AS total_unique_views
 FROM contests c
 JOIN colleges col ON c.contest_id = col.contest_id 
 JOIN challenges ch ON col.college_id = ch.college_id
 LEFT JOIN (
-    SELECT challenge_id, 
-           SUM(total_submissions) AS total_submissions, 
-           SUM(total_accepted_submissions) AS total_accepted_submissions
-    FROM submission_stats
-    GROUP BY challenge_id
+  SELECT challenge_id, SUM(total_submissions) AS total_submissions, 
+         SUM(total_accepted_submissions) AS total_accepted_submissions
+  FROM submission_stats GROUP BY challenge_id
 ) ss ON ch.challenge_id = ss.challenge_id
 LEFT JOIN (
-    SELECT challenge_id, 
-           SUM(total_views) AS total_views, 
-           SUM(total_unique_views) AS total_unique_views
-    FROM view_stats
-    GROUP BY challenge_id
+  SELECT challenge_id, SUM(total_views) AS total_views, 
+         SUM(total_unique_views) AS total_unique_views
+  FROM view_stats GROUP BY challenge_id
 ) vs ON ch.challenge_id = vs.challenge_id
 GROUP BY c.contest_id, c.hacker_id, c.name
-HAVING 
-    SUM(COALESCE(ss.total_submissions, 0)) > 0 OR
-    SUM(COALESCE(ss.total_accepted_submissions, 0)) > 0 OR
-    SUM(COALESCE(vs.total_views, 0)) > 0 OR
-    SUM(COALESCE(vs.total_unique_views, 0)) > 0
+HAVING SUM(COALESCE(ss.total_submissions,0)) > 0
+    OR SUM(COALESCE(ss.total_accepted_submissions,0)) > 0
+    OR SUM(COALESCE(vs.total_views,0)) > 0
+    OR SUM(COALESCE(vs.total_unique_views,0)) > 0
 ORDER BY c.hacker_id, c.contest_id;
 ```
 
-✅ *Uses pre-aggregated views and submissions to avoid duplicates.*
+---
+
+## 🛠️ Breakdown
+
+- Joins contests, colleges, challenges, and views/submissions.
+- Uses subqueries to pre-aggregate submission and view stats.
+- Filters to only active contests using HAVING clause.
+- Uses COALESCE to handle nulls from LEFT JOINs.
 
 ---
 
 ## 🔁 Symmetric Pairs
 
-**Problem**:  
-https://www.hackerrank.com/challenges/symmetric-pairs/problem
+**Problem**: https://www.hackerrank.com/challenges/symmetric-pairs/problem
 
 **Description**:  
 Return all (x, y) pairs where (y, x) also exists. Avoid duplicates and ensure order.
@@ -242,14 +246,19 @@ HAVING COUNT(*) > 1 OR a.x < a.y
 ORDER BY a.x;
 ```
 
-✅ *Detects symmetric relationships in the data.*
+---
+
+## 🛠️ Breakdown
+
+- Performs self-join to check for reverse (y,x) pairs.
+- Uses HAVING to filter duplicates (ensures one row per symmetric pair).
+- ORDER BY ensures consistent output.
 
 ---
 
 ## 🎓 Placements
 
-**Problem**:  
-https://www.hackerrank.com/challenges/placements/problem
+**Problem**: https://www.hackerrank.com/challenges/placements/problem
 
 **Description**:  
 Return names of students whose best friends received a higher salary offer.
@@ -264,119 +273,94 @@ WHERE p2.salary > p1.salary
 ORDER BY p2.salary;
 ```
 
-✅ *Joins Packages to compare student salary against their best friend.*
+---
 
+## 🛠️ Breakdown
+
+- Compares student and their best friend salaries using JOINs.
+- Filters results where the friend’s offer is higher.
+- Outputs name of the underpaid student.
 
 ---
 
-## 📆 15 Days of Learning SQL — Overview
+## 📆 15 Days of Learning SQL
 
-**Problem**  
-https://www.hackerrank.com/challenges/15-days-of-learning-sql/problem
+**Problem**: https://www.hackerrank.com/challenges/15-days-of-learning-sql/problem
 
-Julia ran a 15‑day contest (1‑15 Mar 2016).  
-For **each day** we need:  
-1. **Total unique hackers** with ≥1 submission.  
-2. **Top submitter** (lowest id tie‑break).
-
----
-
-### Sample Schema & Output
-
-`Hackers(hacker_id, name)`      `Submissions(hacker_id, submission_date, …)`  
-
-Sample output (first 6 days):  
-
-```
-2016‑03‑01 4 20703 Angela
-2016‑03‑02 2 79722 Michael
-…
-```
+**Description**:  
+Report for each day:
+- Number of distinct hackers
+- Hacker with most submissions
 
 ---
-
-### SQL – part 1 (daily aggregates)
 
 ```sql
 WITH daily AS (
-  SELECT submission_date,
-         hacker_id,
-         COUNT(*) AS submissions
+  SELECT submission_date, hacker_id, COUNT(*) AS submissions
   FROM Submissions
   GROUP BY submission_date, hacker_id
 )
 SELECT d.submission_date,
-       (SELECT COUNT(DISTINCT hacker_id)
-        FROM daily d2
-        WHERE d2.submission_date = d.submission_date)            AS total_hackers,
-       d.hacker_id,
-       h.name
+       (SELECT COUNT(DISTINCT hacker_id) FROM daily d2 WHERE d2.submission_date = d.submission_date) AS total_hackers,
+       d.hacker_id, h.name
 FROM daily d
 JOIN Hackers h ON h.hacker_id = d.hacker_id
 JOIN (
-     SELECT submission_date,
-            MAX(submissions) AS max_subs
+     SELECT submission_date, MAX(submissions) AS max_subs
      FROM daily
      GROUP BY submission_date
-) m ON m.submission_date = d.submission_date
-     AND d.submissions = m.max_subs
-ORDER BY d.submission_date, d.hacker_id
-;
+) m ON m.submission_date = d.submission_date AND d.submissions = m.max_subs
+ORDER BY d.submission_date, d.hacker_id;
 ```
 
 ---
 
-### 🛠️ Breakdown
+## 🛠️ Breakdown
 
 - CTE **daily** counts submissions per hacker per day.  
 - Inline view **m** picks the max submissions for each day.  
 - Join back to filter top submitters.  
 - Sub‑query counts distinct hackers per date.
 
----
-
-## 📦 SQL Projects — Consecutive Tasks
-
-**Problem**  
-https://www.hackerrank.com/challenges/sql-projects/problem  
-
-Output the **start & end dates** of contiguous task chains, ordered by duration ↑ then start_date.
 
 ---
 
-### SQL (compressed)
+## 📦 SQL Projects — Consecutive Tasks
+
+**Problem**: https://www.hackerrank.com/challenges/sql-projects/problem
+
+**Description**:  
+Output start and end dates for chains of consecutive projects.
 
 ```sql
-SET sql_mode = '';
-
 SELECT Start_Date,
        MIN(End_Date) AS End_Date
 FROM (
   SELECT a.Start_Date, b.End_Date
-  FROM (SELECT Start_Date FROM Projects
-        WHERE Start_Date NOT IN (SELECT End_Date FROM Projects)) a
-  CROSS JOIN (SELECT End_Date FROM Projects
-        WHERE End_Date NOT IN (SELECT Start_Date FROM Projects)) b
+  FROM (SELECT Start_Date FROM Projects WHERE Start_Date NOT IN (SELECT End_Date FROM Projects)) a
+  CROSS JOIN (SELECT End_Date FROM Projects WHERE End_Date NOT IN (SELECT Start_Date FROM Projects)) b
   WHERE a.Start_Date < b.End_Date
 ) pairs
 GROUP BY Start_Date
 ORDER BY DATEDIFF(Start_Date, MIN(End_Date)) DESC, Start_Date;
 ```
 
-✅ *Eliminates overlap, groups by chain start.*
+---
+
+## 🛠️ Breakdown
+
+- Filters for project boundaries.
+- Uses CROSS JOIN to pair potential ranges.
+- Filters and groups to find chains.
 
 ---
 
 ## 🎯 Challenges Created
 
-**Problem**  
-https://www.hackerrank.com/challenges/challenges/problem  
+**Problem**: https://www.hackerrank.com/challenges/challenges/problem
 
-Return `(hacker_id, name, total_challenges)` but **exclude** counts that tie below the maximum.
-
----
-
-### SQL – step 1: totals
+**Description**:  
+Return hackers with the most or uniquely high number of challenges created.
 
 ```sql
 WITH tallies AS (
@@ -389,27 +373,26 @@ max_n AS (SELECT MAX(n) AS mx FROM tallies)
 SELECT *
 FROM tallies, max_n
 WHERE n = mx
-   OR n IN (
-        SELECT n FROM tallies GROUP BY n HAVING COUNT(*) = 1
-   )
+   OR n IN (SELECT n FROM tallies GROUP BY n HAVING COUNT(*) = 1)
 ORDER BY n DESC, hacker_id;
 ```
 
-✅ *Keeps max‑ties or unique counts only.*
+---
+
+## 🛠️ Breakdown
+
+- Counts challenges per hacker.
+- Keeps only the highest and unique counts.
+- Uses CTEs for clarity and reuse.
 
 ---
 
-## 🪄 Harry Potter & Wands
+## 🪄 Harry Potter & Wands
 
-**Problem**  
-https://www.hackerrank.com/challenges/harry-potter-and-wands/problem
+**Problem**: https://www.hackerrank.com/challenges/harry-potter-and-wands/problem
 
-Return **id, age, min(coins), power** for every non‑evil `(age, power)` pair.  
-Order by power ↓ then age ↓.
-
----
-
-### SQL (1/2)
+**Description**:  
+Return id, age, coins, and power for lowest-cost wands for non-evil (age, power) pairs.
 
 ```sql
 WITH min_cost AS (
@@ -419,30 +402,27 @@ WITH min_cost AS (
   WHERE p.is_evil = 0
   GROUP BY w.power, p.age
 )
-```
-
-### SQL (2/2)
-
-```sql
 SELECT w.id, p.age, w.coins_needed, w.power
 FROM Wands w
 JOIN Wands_Property p ON p.code = w.code
-JOIN min_cost m
-  ON m.power = w.power
- AND m.age   = p.age
- AND m.min_coins = w.coins_needed
+JOIN min_cost m ON m.power = w.power AND m.age = p.age AND m.min_coins = w.coins_needed
 WHERE p.is_evil = 0
 ORDER BY w.power DESC, p.age DESC;
 ```
 
-✅ *2‑step min‑cost selection.*
+---
+
+## 🛠️ Breakdown
+
+- CTE selects the minimum coins needed per (age, power).
+- Joins again to filter only those minimum-cost wands.
+- Filters evil wands out.
 
 ---
 
-## 🌳 BST Node Type
+## 🌳 BST Node Type
 
-**Problem**  
-https://www.hackerrank.com/challenges/binary-search-tree-1/problem
+**Problem**: https://www.hackerrank.com/challenges/binary-search-tree-1/problem
 
 ```sql
 SELECT N,
@@ -455,30 +435,25 @@ FROM BST
 ORDER BY N;
 ```
 
-✅ *Root ⇒ `P NULL`; Inner ⇒ referenced as parent; else Leaf.*
+## 🛠️ Breakdown
+
+- `P IS NULL` → Root
+- Appears in P column → Inner
+- Else → Leaf
 
 ---
 
-## 🏢 The Company Hierarchy
+
+## 🏢 The Company Hierarchy
 
 **Problem**  
 https://www.hackerrank.com/challenges/the-company/problem
 
-```
-Sample Output
-
-C1 Monika 1 2 1 2
-C2 Samantha 1 1 2 2
-Explanation
-```
-
-Return `company_code, founder,
-        #lead_managers, #senior_managers, #managers, #employees`  
-Sorted by `company_code` **lexicographically**.
+**Description**:  
+Return `company_code, founder, #lead_managers, #senior_managers, #managers, #employees`, sorted by `company_code`.
 
 ---
 
-### SQL – part 1
 
 ```sql
 SELECT e.company_code,
@@ -496,40 +471,52 @@ GROUP BY e.company_code, c.founder
 ORDER BY e.company_code;
 ```
 
-✅ *Counts each layer via `COUNT(DISTINCT …)`.*
+---
+
+## 🛠️ Breakdown
+
+- Joins employees to their respective managerial layers using LEFT JOINs.
+- Uses `COUNT(DISTINCT ...)` to count unique individuals at each level.
+- Groups by company and founder to return a row per company.
 
 ---
 
-
 ## 🌤️ Weather Observation Station 5
 
-**Problem**  
-https://www.hackerrank.com/challenges/weather-observation-station-5/problem
+**Problem**: https://www.hackerrank.com/challenges/weather-observation-station-5/problem
 
-Return the **shortest** and **longest** city names in `STATION`, together with their lengths (ties resolved alphabetically).
+**Description**:  
+Return the **shortest** and **longest** city names in `STATION`, together with their lengths.
 
 ```sql
 SELECT CITY, LENGTH(CITY) AS len
 FROM   STATION
 WHERE  CITY IN (
-         (SELECT CITY FROM STATION
-          ORDER  BY LENGTH(CITY), CITY LIMIT 1)
+         (SELECT CITY FROM STATION ORDER BY LENGTH(CITY), CITY LIMIT 1)
          UNION ALL
-         (SELECT CITY FROM STATION
-          ORDER  BY LENGTH(CITY) DESC, CITY LIMIT 1)
+         (SELECT CITY FROM STATION ORDER BY LENGTH(CITY) DESC, CITY LIMIT 1)
        );
 ```
 
-✅ *Two self‑contained sub‑queries pick min/max length then union.*
+---
+
+## 🛠️ Breakdown
+
+- Two ordered subqueries fetch the shortest and longest cities alphabetically.
+- `UNION ALL` combines them into a single result.
+- Uses LENGTH to measure city name size.
 
 ---
 
-## 🏅 Full Score (>1 Challenge)
+## 🏅 Full Score (>1 Challenge)
 
-**Problem**  
-https://www.hackerrank.com/challenges/full-score/problem
+**Problem**: https://www.hackerrank.com/challenges/full-score/problem
 
-Count hackers that achieved **full score** (submission = difficulty.score) in **more than one** challenge.
+**Description**:  
+Count hackers with **full score submissions** in more than one challenge.
+
+---
+ 
 
 ```sql
 WITH full AS (
@@ -552,16 +539,22 @@ JOIN   Hackers h USING (hacker_id)
 ORDER  BY t.n DESC, t.hacker_id;
 ```
 
-✅ *Filter to full‑score rows, group, then join names.*
+---
+
+## 🛠️ Breakdown
+
+- Filters full score rows via `score = d.score`.
+- Groups by hacker to count multiple full scores.
+- Joins hacker names and orders by count and ID.
 
 ---
 
-## 📄 The Report (Students & Grades)
+## 📄 The Report (Students & Grades)
 
-**Problem**  
-https://www.hackerrank.com/challenges/the-report/problem
+**Problem**: https://www.hackerrank.com/challenges/the-report/problem
 
-Output **Name / Grade / Mark** with special ordering & name masking for grades < 8.
+**Description**:  
+Output Name / Grade / Mark, masking names with NULL for grades < 8.
 
 ```sql
 SELECT
@@ -576,13 +569,20 @@ ORDER  BY g.grade DESC,
          s.marks;
 ```
 
-✅ *CASE masks low‑grade names and custom ORDER BY satisfies both blocks.*
+---
+
+## 🛠️ Breakdown
+
+- Uses CASE to anonymize students with grades below 8.
+- Matches marks to grades via BETWEEN.
+- Orders by grade descending, then by name or marks conditionally.
 
 ---
 
 ## 💰 City‑Product Spend
-
-**Goal** – for every `(city, product)` pair, return **total amount spent** (`SUM(line_total_price)`), order by spend ↓, city, product.
+**Problem**: https://www.hackerrank.com/challenges/the-report/problem?isFullScreen=true
+**Description**:  
+For every (city, product) pair, return total spend amount.
 
 ```sql
 SELECT
@@ -600,13 +600,20 @@ ORDER BY   amount_spent DESC,
            p.product_name;
 ```
 
-✅ *Traverses invoice → customer → city and aggregates per product.*
+---
+
+## 🛠️ Breakdown
+
+- Joins invoice items back to customer and city tables.
+- Aggregates sales per city/product combo.
+- Orders by spend, then alphabetically.
 
 ---
 
 ## 🌡️ Monthly Temperature Summary
-
-Aggregate **max / min / avg** temperature per month.
+**Problem**: test challenge
+**Description**:  
+Aggregate max, min, and average monthly temperatures.
 
 ```sql
 SELECT
@@ -619,13 +626,20 @@ GROUP BY YEAR(record_date), MONTH(record_date)
 ORDER BY y_m;
 ```
 
-✅ *CASE pivots rows into columns then aggregates.*
+---
+
+## 🛠️ Breakdown
+
+- Uses CASE inside aggregate functions to pivot rows to columns.
+- Groups by month using YEAR + MONTH from date.
+- Outputs formatted year-month strings.
 
 ---
 
 ## ⏱️ Hours Worked per Day → Total per Employee
-
-Compute hours between first & last timestamp each day, then sum per employee.
+**Problem**: test challenge
+**Description**:  
+Compute hours between first & last timestamp each day, then sum per employee.
 
 ```sql
 WITH daily AS (
@@ -647,4 +661,27 @@ GROUP  BY emp_id
 ORDER  BY emp_id;
 ```
 
-✅ *Daily inner diff → outer SUM gives total hours.*
+---
+
+## 🛠️ Breakdown
+
+- CTE calculates time difference between first and last entry per day.
+- Outer query sums daily values per employee.
+- Uses TIMESTAMPDIFF for hourly difference.
+
+---
+layout: image
+class: text-center
+image: https://raw.githubusercontent.com/Qleoz12/Slides-dev/refs/heads/master/funnyPictures/mr-robot.webp
+---
+
+<div style="background: rgba(0, 0, 0, 0.6); padding: 2rem; border-radius: 1rem; display: inline-block;">
+  <div style="font-size: 2.5rem; font-weight: bold; color: #ffe600; margin-bottom: 0.5rem;">
+    😅 After all that knowledge…
+  </div>
+  <div style="font-size: 2rem; font-weight: 500; color: #ffffff;">
+    You still have to explain HR how you know SQL.
+  </div>
+</div>
+
+---
