@@ -62,7 +62,7 @@ jobs:
 
     steps:
       - name: Check if dist exists
-        run: ls -la && ls -la dist || echo "dist not found"
+        run: ls -R dist
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
