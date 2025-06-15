@@ -2,7 +2,7 @@ name: Deploy Slidev to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]  # Or ["**"] if you want it on every branch
+    branches: [ "**" ]  # Or ["**"] if you want it on every branch
 
 jobs:
   build:
