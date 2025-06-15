@@ -2,23 +2,15 @@ name: Deploy Slidev to GitHub Pages
 
 on:
   push:
-    branches: [ "**" ]  # Or ["**"] if you want it on every branch
+    branches: [main]  # Trigger only when pushing to main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    outputs:
-      artifact-path: ${{ steps.upload.outputs.artifact-path }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10.9.0
-          run_install: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,29 +18,14 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
         run: pnpm install
 
       - name: Build all slide decks
         run: pnpm build:all
-
-      - name: Upload dist/ as artifact
-        id: upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: slidev-dist
-          path: dist
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: slidev-dist
-          path: dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -57,4 +34,3 @@ jobs:
           publish_dir: dist
           publish_branch: gh-pages
           force_orphan: true
-          commit_message: "Deploy Slidev to GitHub Pages"
