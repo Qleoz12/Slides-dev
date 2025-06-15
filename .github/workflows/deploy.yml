@@ -59,10 +59,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: List dist output
-        run: |
-          echo "🔍 dist structure:" |
-            find dist
+      - name: Check if dist exists
+        run: ls -la && ls -la dist || echo "dist not found"
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
