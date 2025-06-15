@@ -23,7 +23,7 @@
     "build:intro:gh": "slidev build slides/intro.md --out ../dist/intro --base /Slides-dev/intro",
     "build:workshop:gh": "slidev build slides/workshop.md --out ../dist/workshop --base /Slides-dev/workshop",
     "build:review:gh": "slidev build slides/review.md --out ../dist/review --base /Slides-dev/review",
-    "build:sql-hackerrank:gh": "slidev build slides/sql-hackerrank.md --out dist/sql-hackerrank --base /Slides-dev/sql-hackerrank",
+    "build:sql-hackerrank:gh": "slidev build slides/sql-hackerrank.md --out ../dist/sql-hackerrank --base /Slides-dev/sql-hackerrank",
     "build:all:gh": "pnpm build:intro:gh && pnpm build:workshop:gh && pnpm build:review:gh && pnpm build:sql-hackerrank:gh"
 
   },
