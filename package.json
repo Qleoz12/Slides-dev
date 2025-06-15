@@ -18,7 +18,8 @@
     "serve:all": "npx serve dist",
     "auto:build": "chokidar 'slides/*.md' -c 'pnpm build:all'",
     "live": "concurrently -k -n 'BUILD,SERVE' -c green,cyan \"pnpm auto:build\" \"live-server dist --watch=dist --port=3000\"",
-    "start": "pnpm build:all && pnpm live"
+    "start": "pnpm build:all && pnpm live",
+    "generate:index": "node scripts/create-index.js"
 
   },
   "dependencies": {
