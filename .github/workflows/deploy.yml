@@ -41,6 +41,8 @@ jobs:
 
       - name: Generate index page
         run: pnpm generate:index
+      - name: Add .nojekyll
+        run: touch dist/.nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
