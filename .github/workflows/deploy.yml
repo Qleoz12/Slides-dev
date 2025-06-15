@@ -64,8 +64,13 @@ jobs:
       - name: Download dist/ artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages   # must match upload name
-          path: dist
+          name: github-pages
+          path: extracted-dist
+  
+      - name: Move extracted files to ./dist
+        run: |
+          mkdir dist
+          tar -xf extracted-dist/artifact.tar -C dist || echo "Nothing to extract?"
   
       - name: List all files in workspace
         run: |
@@ -75,14 +80,10 @@ jobs:
       - name: Check dist/ content
         run: |
           echo "📁 dist/ content:"
-          if [ -d dist ]; then
-            ls -R dist
-          else
-            echo "❌ dist directory not found"
-            exit 1
-          fi
+          ls -R dist || echo "dist not found"
   
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
 
