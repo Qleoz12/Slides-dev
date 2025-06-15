@@ -2,7 +2,7 @@ name: Deploy Slidev to GitHub Pages
 
 on:
   push:
-    branches: [main]  # Trigger only when pushing to main
+    branches: [ "**" ]  # Run on every commit to any branch
 
 jobs:
   build-and-deploy:
@@ -34,4 +34,5 @@ jobs:
           publish_dir: dist
           publish_branch: gh-pages
           force_orphan: true
-          commit_message: 'Deploy Slidev to GitHub Pages'
+          commit_message: "Deploy Slidev to GitHub Pages"
+          
