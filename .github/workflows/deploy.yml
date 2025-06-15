@@ -37,7 +37,7 @@ jobs:
         run: pnpm install
 
       - name: Build all slide decks
-        run: pnpm build:all
+        run: pnpm build:all:gh
         
      
       - name: Generate index page
