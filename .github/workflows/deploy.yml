@@ -47,6 +47,10 @@ jobs:
         run: |
           echo "📁 Final dist/ contents before upload:"
           find dist
+      - name: Check content
+        run: |
+          echo "📁 dist/ content:"
+          ls -R
 
       - name: Add .nojekyll
         run: touch dist/.nojekyll
