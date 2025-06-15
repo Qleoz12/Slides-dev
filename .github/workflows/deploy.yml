@@ -38,11 +38,19 @@ jobs:
 
       - name: Build all slide decks
         run: pnpm build:all:gh
-
+        
+     
       - name: Generate index page
         run: pnpm generate:index
+      
+      - name: 🕵️ Show dist structure before upload
+        run: |
+          echo "📁 Final dist/ contents before upload:"
+          find dist
+
       - name: Add .nojekyll
         run: touch dist/.nojekyll
+        
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -66,11 +74,6 @@ jobs:
         with:
           name: github-pages
           path: extracted-dist
-  
-      - name: Move extracted files to ./dist
-        run: |
-          mkdir dist
-          tar -xf extracted-dist/artifact.tar -C dist || echo "Nothing to extract?"
   
       - name: List all files in workspace
         run: |
