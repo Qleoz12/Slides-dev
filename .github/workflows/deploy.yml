@@ -38,8 +38,6 @@ jobs:
 
       - name: Build all slide decks
         run: pnpm build:all
-      - name: Generate index page
-        run: pnpm generate:index
 
       - name: Generate index page
         run: pnpm generate:index
