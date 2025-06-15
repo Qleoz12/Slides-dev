@@ -59,14 +59,30 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
+  
     steps:
       - name: Download dist/ artifact
         uses: actions/download-artifact@v4
-
-      - name: Check dist content
-        run: ls -R dist
-
+        with:
+          name: github-pages   # must match upload name
+          path: dist
+  
+      - name: List all files in workspace
+        run: |
+          echo "📦 Workspace structure:"
+          find . -type f
+  
+      - name: Check dist/ content
+        run: |
+          echo "📁 dist/ content:"
+          if [ -d dist ]; then
+            ls -R dist
+          else
+            echo "❌ dist directory not found"
+            exit 1
+          fi
+  
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
