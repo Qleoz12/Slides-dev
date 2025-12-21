@@ -683,5 +683,3 @@ image: https://raw.githubusercontent.com/Qleoz12/Slides-dev/refs/heads/master/fu
     You still have to explain HR how you know SQL.
   </div>
 </div>
-
----
