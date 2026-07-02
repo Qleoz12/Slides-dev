@@ -21,3 +21,4 @@ for (const file of files) {
   execSync(`slidev build ${inputPath} --out ${outputPath} --base ${base}`, { stdio: 'inherit' })
 }
 console.log('✅ All slide decks built successfully.')
+execSync('node scripts/create-index.js', { stdio: 'inherit' })

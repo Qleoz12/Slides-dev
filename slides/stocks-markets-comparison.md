@@ -71,34 +71,20 @@ Just **real data + clear rules**.
 
 Instead of complex models or forecasts, I chose:
 
-- ✅ **Simple**
-- ✅ **Transparent**
-- ✅ **Reproducible**
-
-No black boxes.  
-No over-optimization.
-
----
-
-## 🧠 Design Philosophy
-
-Just **real data + clear rules**.
+- ✅ **Simple** · **Transparent** · **Reproducible**
+- No black boxes. No over-optimization.
 
 A company with high leverage but weak earnings is **fundamentally riskier** than one with stable profits and manageable debt.
 
-As **Benjamin Graham** advises in *The Intelligent Investor*, the margin of safety comes from understanding how earnings support debt and valuation — not from short-term trading...
+As **Benjamin Graham** advises in *The Intelligent Investor*, the margin of safety comes from understanding how earnings support debt — not from short-term trading.
 
----
+**My rules:**
+- Horizon: small–medium (~2 years post-degree)
+- Max drawdown below **20%**
+- Dividend yield above **6%**
+- Compare NYSE, TSX, LSE with the same criteria
+- Diversify across sectors
 
-## 🧠 Design Philosophy
-
-Just **real data + clear rules**.
-- investment time horizon: small-medium (2 years) postdegree time
-- search stock with average drawdown below a threshold **20%**
-- search stock with high dividend yield above a threshold **6%**
-- compare stocks from different exchanges with these criteria
-- capture several stock/etfs in diferent sectors to have a **diversified portfolio**
-  
 ---
 
 ## 📦 Dataset Collection
@@ -157,7 +143,7 @@ df.sort_values("score").head(100)
 
 <div class="grid grid-cols-1 gap-6 items-center">
   <div class="text-center">
-    <img src="https://qleoz12.github.io/assets/images/graphs/zscores.png" style="max-height: 380px; width: 100%; object-fit: contain;" />
+    <img src="https://qleoz12.github.io/assets/images/graphs/zscores.png" class="w-full" style="max-height: 420px; object-fit: contain;" />
     <div class="mt-2 font-bold">Z-Scores</div>
   </div>
 </div>
@@ -169,7 +155,7 @@ df.sort_values("score").head(100)
 
 <div class="grid grid-cols-1 gap-6 items-center">
   <div class="text-center">
-    <img src="https://qleoz12.github.io/assets/images/graphs/violines.png" style="max-height: 380px; width: 100%; object-fit: contain;" />
+    <img src="https://qleoz12.github.io/assets/images/graphs/violines.png" class="w-full" style="max-height: 420px; object-fit: contain;" />
     <div class="mt-2 font-bold">Z-Scores</div>
   </div>
 </div>
@@ -194,12 +180,12 @@ This chart shows:
 
 <div class="grid grid-cols-2 gap-6 items-center">
   <div class="text-center">
-    <img src="https://qleoz12.github.io/assets/images/graphs/zscores.png" style="max-height: 380px; width: 100%; object-fit: contain;" />
+    <img src="https://qleoz12.github.io/assets/images/graphs/zscores.png" class="w-full" style="max-height: 420px; object-fit: contain;" />
     <div class="mt-2 font-bold">Z-Scores</div>
   </div>
 
   <div class="text-center">
-    <img src="https://qleoz12.github.io/assets/images/graphs/ddmaxdrawdown.png" style="max-height: 380px; width: 100%; object-fit: contain;" />
+    <img src="https://qleoz12.github.io/assets/images/graphs/ddmaxdrawdown.png" class="w-full" style="max-height: 420px; object-fit: contain;" />
     <div class="mt-2 font-bold">Max Drawdown</div>
   </div>
 </div>

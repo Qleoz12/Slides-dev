@@ -23,3 +23,4 @@ for (const file of files) {
 }
 
 console.log('✅ All slide decks built for LOCAL successfully.')
+execSync('node scripts/create-index.js', { stdio: 'inherit' })
