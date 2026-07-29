@@ -29,7 +29,17 @@ Other decks:
 pnpm dev:intro
 pnpm dev:workshop
 pnpm dev:review
+pnpm dev:dana4840
 ```
+
+DANA 4840 final project (hierarchical clustering of Dow stocks):
+
+```bash
+pnpm dev:dana4840
+```
+
+Source notebook: `market_cluster_class_metrics_retest_k6_k3_executed.ipynb` in the Langara Final Project folder.  
+Written report: `Final_Project_Part2.Rmd` (R, knit to PDF for Brightspace).
 
 Default Slidev template (demo):
 
@@ -50,6 +60,8 @@ pnpm generate:index    # regenerate dist/index.html after a build
 | Path | Purpose |
 |------|---------|
 | `slides/*.md` | One presentation per file |
+| `slides/dana4840-market-clustering.md` | DANA 4840 Part 2 — stock clustering |
+| `slides/images/dana4840/` | Figures exported from the clustering notebook (PNG) |
 | `slides/styles/finance.css` | Theme for the financial deck |
 | `dist/<name>/` | Built static site per deck |
 | `dist/index.html` | Links to all decks |

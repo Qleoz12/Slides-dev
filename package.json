@@ -11,6 +11,7 @@
     "dev:intro": "slidev slides/intro.md --open",
     "dev:workshop": "slidev slides/workshop.md --open",
     "dev:review": "slidev slides/review.md --open",
+    "dev:dana4840": "slidev slides/dana4840-market-clustering.md --open --force",
     "dev:time-makes": "slidev slides/time-makes-small-actions-powerful.md --open --force",
     "build:intro": "slidev build slides/intro.md --out ../dist/intro --base /intro",
     "build:workshop": "slidev build slides/workshop.md --out ../dist/workshop --base /workshop",
