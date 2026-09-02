@@ -20,7 +20,10 @@ mdc: true
 
 ### DANA 4840 — Final Project Part 2
 
-Hierarchical clustering + K-means on 25 Dow stocks
+**Market Cluster Explorer** — clustering Dow stocks from a local Excel workbook
+
+- Load data → Hopkins → compare linkages → retest k → export results
+- Hierarchical clustering + K-means on **25** Dow stocks
 
 <!--
 Cover (~30 sec). Introduce yourself and the course project.
@@ -73,6 +76,48 @@ Features (~1 min). Explain why scaling matters for distance-based methods.
 
 <!--
 Correlation (~1 min). Distance clustering is sensitive to correlated columns.
+-->
+
+---
+
+## Linkage cophenetic correlation
+
+<img src="./images/dana4840/linkage_correlation_matrix.png" class="w-full" style="max-height: 380px; object-fit: contain;" />
+
+- Heatmap of **cophenetic correlation** between five linkage dendrograms
+- High values → similar tree structure (Python `seaborn.heatmap`, like R `corrplot`)
+- **average** vs **single** ≈ 0.93; **ward** is least similar to others
+
+<!--
+Linkage heatmap (~45 sec). Compares linkage methods before picking average.
+-->
+
+---
+
+## Internal validation (clValid-style)
+
+<img src="./images/dana4840/validation_internal_curves.png" class="w-full" style="max-height: 380px; object-fit: contain;" />
+
+- **Connectivity** ↓ better · **Dunn** ↑ better · **Silhouette** ↑ better
+- Three methods: hierarchical, k-means, PAM — k = 2–6
+- Dashed line = final **k = 3**
+
+<!--
+Internal validation (~1 min). clValid Figure 1 style — compactness, separation, connectivity.
+-->
+
+---
+
+## Stability validation (LOO feature)
+
+<img src="./images/dana4840/validation_stability_curves.png" class="w-full" style="max-height: 380px; object-fit: contain;" />
+
+- **APN**, **AD**, **ADM** ↓ better (clValid stability measures)
+- Leave-one-feature-out: remove one column, re-cluster, compare labels
+- Lower curves = labels stay stable when one feature is missing
+
+<!--
+Stability (~45 sec). clValid Figure 2 style — LOO feature stability across k.
 -->
 
 ---
@@ -246,20 +291,6 @@ K-means k=6 (~45 sec). Compare with k=3: better silhouette but one-stock cluster
 
 <!--
 Silhouette (~1 min). Negative bars mean awkward position between clusters.
--->
-
----
-
-## Internal validation curves
-
-<img src="./images/dana4840/validation_internal_curves.png" class="w-full" style="max-height: 380px; object-fit: contain;" />
-
-- 3 internal measures × 3 methods (hierarchical, kmeans, pam), k = 2–6
-- Dashed line = final **k = 3**
-- At k = 3: hierarchical wins Dunn/connectivity; kmeans close on silhouette
-
-<!--
-Internal curves (~1 min). Internal metrics often peak at k=2; we still pick k=3 for balance.
 -->
 
 ---
