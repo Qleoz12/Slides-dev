@@ -1,0 +1,150 @@
+:root {
+  --oc-bg: #0f172a;
+  --oc-bg-2: #1e293b;
+  --oc-card: #111827;
+  --oc-text: #f8fafc;
+  --oc-muted: #94a3b8;
+  --oc-accent: #38bdf8;
+  --oc-accent-2: #fbbf24;
+  --oc-cop: #f97316;
+  --oc-cad: #22d3ee;
+  --oc-mxn: #a78bfa;
+  --oc-good: #4ade80;
+  --oc-bad: #f87171;
+}
+
+.slidev-layout.default.oc-slide,
+.slidev-layout.cover.oc-hero,
+.slidev-layout.two-cols.oc-slide,
+.slidev-layout.center.oc-slide {
+  background: radial-gradient(120% 90% at 10% 0%, #1e3a5f 0%, var(--oc-bg) 55%) !important;
+  color: var(--oc-text) !important;
+}
+
+.oc-slide h1,
+.oc-hero h1 {
+  color: var(--oc-text) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+}
+
+.oc-slide h2,
+.oc-slide h3,
+.oc-hero h3 {
+  color: var(--oc-muted) !important;
+  font-weight: 500 !important;
+}
+
+.oc-kicker {
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oc-accent);
+}
+
+.oc-card {
+  background: color-mix(in srgb, var(--oc-bg-2) 88%, white 4%);
+  border: 1px solid color-mix(in srgb, var(--oc-accent) 22%, transparent);
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
+}
+
+.oc-muted {
+  color: var(--oc-muted);
+}
+
+.oc-accent {
+  color: var(--oc-accent);
+}
+
+.oc-foot {
+  font-size: 0.7rem;
+  line-height: 1.35;
+  color: var(--oc-muted);
+  margin-top: 0.6rem;
+}
+
+.oc-bridge svg {
+  width: min(100%, 860px);
+  margin: 0 auto;
+  display: block;
+}
+
+.oc-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.oc-pill {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--oc-accent) 35%, transparent);
+}
+
+.oc-num-xl {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.oc-num-down {
+  color: var(--oc-bad);
+}
+
+.oc-num-up {
+  color: var(--oc-good);
+}
+
+.slidev-layout.default.oc-slide .slidev-code,
+.slidev-layout.default.oc-slide code {
+  background: #0b1220 !important;
+  color: #e2e8f0 !important;
+}
+
+/* --- Compact titles and margins (Nov 2026) --- */
+.slidev-layout.default.oc-slide {
+  padding-top: 1.4rem !important;
+  padding-bottom: 1rem !important;
+}
+.oc-slide h1 {
+  font-size: 2.1rem !important;
+  line-height: 1.15 !important;
+  margin-bottom: 0.6rem !important;
+}
+.slidev-layout.cover.oc-hero h1 {
+  font-size: 3.1rem !important;
+  line-height: 1.08 !important;
+}
+.oc-headline {
+  border-left: 3px solid var(--oc-accent);
+  background: color-mix(in srgb, var(--oc-bg-2) 70%, transparent);
+  padding: 0.6rem 0.9rem;
+  border-radius: 0 10px 10px 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+.oc-headline .oc-src {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oc-muted);
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+.oc-vol td, .oc-vol th { padding: 0.35rem 0.5rem; border-bottom: 1px solid rgba(148,163,184,0.15); }
+.oc-vol th { font-weight: 500; color: var(--oc-muted); font-size: 0.8rem; }
+
+.oc-card.oc-tight { padding: 0.55rem 0.9rem; line-height: 1.3; }
+.oc-phone { width: 210px; height: 360px; border-radius: 30px; border: 6px solid #334155; background: #0b1220;
+  padding: 18px 14px; position: relative; box-shadow: 0 0 40px rgba(248,113,113,0.25); text-align: center; }
+.oc-phone-notch { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 70px; height: 10px; border-radius: 6px; background: #334155; }
+.oc-phone-app { font-weight: 700; font-size: 0.9rem; color: #e2e8f0; margin-top: 8px; }
+.oc-phone-alert { margin: 12px 0; padding: 6px; border-radius: 8px; background: #7f1d1d; color: #fecaca; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.04em; }
+.oc-phone-label { font-size: 0.7rem; color: #94a3b8; }
+.oc-phone-bal { font-size: 1.6rem; font-weight: 800; color: #64748b; margin-bottom: 10px; }
+.oc-phone-btn { margin: 6px 10px; padding: 6px; border-radius: 8px; background: #1e293b; color: #475569; font-size: 0.8rem; text-decoration: line-through; }
+.oc-phone-err { margin-top: 12px; font-size: 0.65rem; color: #f87171; line-height: 1.3; }

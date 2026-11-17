@@ -1,0 +1,13 @@
+{
+  "source": "Aldasoro, Beltran & Grinberg (2026). BIS Working Paper 1340, Table 1.",
+  "url": "https://www.bis.org/publ/work1340.htm",
+  "samplePeriod": "Q2 2025",
+  "definition": "Annualized volatility from BIS study of USDT/local-currency exchange trading — not identical to interbank FX vol.",
+  "rows": [
+    { "code": "CAD", "label": "CAD", "volatilityPct": 7.27 },
+    { "code": "MXN", "label": "MXN", "volatilityPct": 11.36 },
+    { "code": "COP", "label": "COP", "volatilityPct": 12.25 },
+    { "code": "BRL", "label": "BRL", "volatilityPct": 13.8 },
+    { "code": "ARS", "label": "ARS", "volatilityPct": 23.1 }
+  ]
+}

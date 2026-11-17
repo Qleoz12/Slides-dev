@@ -42,6 +42,9 @@ jobs:
      
       - name: Generate index page
         run: pnpm generate:index
+
+      - name: GitHub Pages SPA deep links (slide /5, /6, …)
+        run: node scripts/patch-gh-pages-spa.mjs
       
       - name: 🕵️ Show dist structure before upload
         run: |

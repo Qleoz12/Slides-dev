@@ -1,0 +1,44 @@
+{
+  "status": "ILLUSTRATIVE_TEMPLATE",
+  "disclaimer": "Example structure only — replace with verified quotes for the same amount, corridor, and timestamp before presenting publicly.",
+  "scenario": {
+    "sendAmountUsd": 1000,
+    "from": "Colombia (COP savings)",
+    "to": "Canada (CAD tuition deposit)",
+    "asOf": "Replace with quote timestamp"
+  },
+  "methods": [
+    {
+      "name": "Traditional bank",
+      "feesUsd": null,
+      "rateNote": "Insert bank posted rate",
+      "receivedCad": null,
+      "eta": "1–5 business days (typical; verify)",
+      "limitations": "Higher spreads; intermediary fees"
+    },
+    {
+      "name": "Wise",
+      "feesUsd": null,
+      "rateNote": "Insert Wise mid-market + fee at time T",
+      "receivedCad": null,
+      "eta": "Verify in app",
+      "limitations": "Corridor and limits apply"
+    },
+    {
+      "name": "Remitly",
+      "feesUsd": null,
+      "rateNote": "Insert Remitly quote at time T",
+      "receivedCad": null,
+      "eta": "Verify in app",
+      "limitations": "Promotional rates may differ"
+    },
+    {
+      "name": "USDT bridge (hypothetical)",
+      "feesUsd": null,
+      "rateNote": "On-ramp + network + off-ramp spreads",
+      "receivedCad": null,
+      "eta": "Variable; custody and compliance risks",
+      "limitations": "Not a bank deposit; multiple fee layers"
+    }
+  ]
+}
